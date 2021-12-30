@@ -1,14 +1,17 @@
 package app
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"os"
 )
 
 func StartApi(r *gin.Engine) {
 	if os.Getenv("HTTPS") == "true" {
+		fmt.Println("running https")
 		r.RunTLS(":8080", os.Getenv("CERT_FILE"), os.Getenv("KEY_PATH"))
 	} else {
+		fmt.Println("running http")
 		r.Run()
 	}
 
