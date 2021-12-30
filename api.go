@@ -1,9 +1,17 @@
 package app
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"os"
+)
 
 func StartApi(r *gin.Engine) {
-	r.Run()
+	if os.Getenv("HTTPS") == "true" {
+		r.RunTLS(":8080", os.Getenv("CERT_FILE"), os.Getenv("KEY_PATH"))
+	} else {
+		r.Run()
+	}
+
 }
 
 func CORSMiddleware() gin.HandlerFunc {
